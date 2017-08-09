@@ -61,7 +61,7 @@ var #skillIntensity 1
 var #maxOutHero 0
 //; 1 = Damon (Mage)
 //; 2 = Finn (Ranged)
-//; 3 = Nohni (Meel)
+//; 3 = Nohni (Melee)
 
 // ----------- Actions ----------- [ Skills ]
 var #enableSkills 1
@@ -800,19 +800,19 @@ goto :levelHeroes
 		sleep 40
 		touchUp 1
 	elseif #maxOutHero == 2
-		touchDown 1 466 645
-		sleep 40
-		touchUp 1
-		sleep 300
-		touchDown 1 466 645
-		sleep 40
-		touchUp 1
-	elseif #maxOutHero == 2
 		touchDown 1 466 720
 		sleep 40
 		touchUp 1
 		sleep 300
 		touchDown 1 466 720
+		sleep 40
+		touchUp 1
+	elseif #maxOutHero == 3
+		touchDown 1 466 645
+		sleep 40
+		touchUp 1
+		sleep 300
+		touchDown 1 466 645
 		sleep 40
 		touchUp 1
 	endif		
@@ -1004,20 +1004,25 @@ goto :runActions
 goto :pressSkills
 
 :startBossWithSkills
-	if #startBossSkill == 2 or #startBossSecondarySkill == 2
+	if #startBossSkill == 2
 		touchPress 0 120 710
+		goto :startBossWithSecondarySkill
 	endif
-	if #startBossSkill == 4 or #startBossSecondarySkill == 4
+	if #startBossSkill == 4
 		touchPress 0 280 710
+		goto :startBossWithSecondarySkill
 	endif
-	if #startBossSkill == 3 or #startBossSecondarySkill == 3
+	if #startBossSkill == 3
 		touchPress 0 200 710
+		goto :startBossWithSecondarySkill
 	endif
-	if #startBossSkill == 5 or #startBossSecondarySkill == 5
+	if #startBossSkill == 5
 		touchPress 0 360 710
+		goto :startBossWithSecondarySkill
 	endif
-	if #startBossSkill == 6 or #startBossSecondarySkill == 6
+	if #startBossSkill == 6
 		touchPress 0 430 710
+		goto :startBossWithSecondarySkill
 	endif
 	
 	#time = #time + 400
@@ -1030,6 +1035,23 @@ goto :pressSkills
 	sleep #btnDelay
 	#time = #time + #btnDelay
 goto :pressSkills
+
+:startBossWithSecondarySkill
+	if #startBossSecondarySkill == 2
+		touchPress 0 120 710
+	endif
+	if #startBossSecondarySkill == 4
+		touchPress 0 280 710
+	endif
+	if #startBossSecondarySkill == 3
+		touchPress 0 200 710
+	endif
+	if #startBossSecondarySkill == 5
+		touchPress 0 360 710
+	endif
+	if #startBossSecondarySkill == 6
+		touchPress 0 430 710
+	endif
 
 // ----------- RANDOM ATTACK
 :randomTouch
