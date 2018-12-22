@@ -1,4 +1,4 @@
-// August 12, 2018
+// Dec 22, 2018
 // -  Tap Titans 2 AdvancedClickBot by Tune389 [ v1.3 dev 1]
 // edited by djo5296 '17-12-30
 // now fully handled by chrisreyn
@@ -31,7 +31,7 @@ var #lateRun 0
 // if #lateRun > 0, will resume run at #minutes = #lateRun
 // 2nd run onwards (aka after prestige) will NOT adjust time
 
-var #prestigeStartTime 40
+var #prestigeStartTime 29
 // input minimum time in minutes before prestige
 // prestige time range is ALWAYS +10 more minutes greater than StartTime to prevent teapot
 // ---------- Actions ---------- [ General ]
@@ -40,7 +40,7 @@ var #runActionsEveryXSeconds 94
 // ^esp if you cant level SC in the first run
 // ^so that when runActions runs, SC is done and script can level up SC
 // also note that displayed run time is not very accurate with real time
-// IMPORTANT go to line 249 and edit the settings there
+// IMPORTANT go to line 248 and edit the settings there
 
 var #runActionsOnStart 1
 // 1 = (default) run actions on script start
@@ -163,12 +163,12 @@ set #iHoM #intervalHoM
 set #iWC #intervalWC
 set #iSC #intervalSC
 calc #minz #lateRun * 60000
-var #prestigeAfterXMinutes 180
+var #prestigeAfterXMinutes 60
 if #prestigeStartTime > 0
 	calc #prestigeEndTime #prestigeStartTime + 10
 	rand #prestigeAfterXMinutes #prestigeStartTime #prestigeEndTime
 else
-	set #prestigeStartTime 45
+	set #prestigeStartTime 29
 	calc #prestigeEndTime #prestigeStartTime + 10
 endif
 var #maxedOutSkills 0
@@ -411,7 +411,7 @@ goto :start
 		if #scActiveCheck == 1
 			if #scAC == 0
 				#scAC = 1
-				getRGB #colorRed #colorGreen #colorBlue 410 705
+				getRGB #colorRed #colorGreen #colorBlue 423 688
 				#time = #time + 100
 			endif
 			
@@ -440,7 +440,7 @@ goto :pressSkillsB
 		if #scActiveCheck == 1
 			if #scAC == 0
 				#scAC = 1
-				getRGB #colorRed #colorGreen #colorBlue 410 705
+				getRGB #colorRed #colorGreen #colorBlue 423 688
 				#time = #time + 100
 			endif
 			
@@ -466,7 +466,7 @@ goto :pressSkillsB
 		if #scActiveCheck == 1
 			if #scAC == 0
 				#scAC = 1
-				getRGB #colorRed #colorGreen #colorBlue 410 705
+				getRGB #colorRed #colorGreen #colorBlue 423 688
 				#time = #time + 100
 			endif
 			
@@ -495,7 +495,7 @@ goto :pressSkillsC
 		if #scActiveCheck == 1
 			if #scAC == 0
 				#scAC = 1
-				getRGB #colorRed #colorGreen #colorBlue 410 705
+				getRGB #colorRed #colorGreen #colorBlue 423 688
 				#time = #time + 100
 			endif
 			
@@ -521,7 +521,7 @@ goto :pressSkillsC
 		if #scActiveCheck == 1
 			if #scAC == 0
 				#scAC = 1
-				getRGB #colorRed #colorGreen #colorBlue 410 705
+				getRGB #colorRed #colorGreen #colorBlue 423 688
 				#time = #time + 100
 			endif
 			
@@ -1210,7 +1210,7 @@ goto :endLvlSkill
 
 :maxHS
 	#loopBreak = #loopBreak + 1
-	if #loopBreak > 11
+	if #loopBreak > 13
 		#loopBreak = 0
 		//slide back
 		touchDown 1 280 650
@@ -1349,6 +1349,7 @@ goto :closeMenu
 	#time = #time + 100
 	
 	if #agree == 1
+		sleep 2000
 		touchDown 0 350 630
 		sleep 30
 		touchUp 0
@@ -1361,10 +1362,11 @@ goto :closeMenu
 		sleep 30
 		touchUp 0
 		sleep 30
-		#time = #time + 180
+		#time = #time + 2180
 	endif
 	
 	if #decline == 1
+		sleep 2000
 		touchDown 0 200 630
 		sleep 30
 		touchUp 0
@@ -1373,9 +1375,15 @@ goto :closeMenu
 		sleep 30
 		touchUp 0
 		sleep 30
-		#time = #time + 120
+		#time = #time + 2120
 	endif
 	
+	if #minutes < 2
+		goto :closeMenu
+	endif
+goto :levelHeroes2	
+
+:levelHeroes2
 	//open menu
 	sleep #btnDelay
 	#time = #time + #btnDelay
@@ -1383,11 +1391,16 @@ goto :closeMenu
 	sleep #btnDelay
 	#time = #time + #btnDelay
 	touchUp 0
-	sleep 1000
-	#time = #time + 1000
+	sleep 1100
+	#time = #time + 1100
 	
 	if #tryWithDelay == 1
 		sleep 3000
+	endif
+	
+	getColor #color 330 480
+	if #color != 5000276
+		goto :levelHeroes2
 	endif
 	
 	#loopDetectionCount = #loopDetectionCount + 1
@@ -1437,7 +1450,7 @@ goto :closeMenu
 	//endif
 	
 	#tryWithDelay = 1
-goto :levelHeroes
+goto :levelHeroes2
 
 :scrollTop
 	#loopDetectionCount = #loopDetectionCount + 1
@@ -1503,7 +1516,11 @@ goto :levelHeroes
 goto :scrollTop
 
 :lvlTopHero
-	touchPress 0 460 670
+	touchPress 0 466 570
+	sleep #btnDelay
+	touchPress 0 466 570
+	sleep #btnDelay
+	touchPress 0 466 570
 	sleep #btnDelay
 	touchPress 0 460 670
 	sleep #btnDelay
@@ -1511,7 +1528,9 @@ goto :scrollTop
 	sleep #btnDelay
 	touchPress 0 460 670
 	sleep #btnDelay
-	#time = #time + #btnDelay * 4
+	touchPress 0 460 670
+	sleep #btnDelay
+	#time = #time + #btnDelay * 7
 	
 	//lvl up only nearby heroes at this time onwards
 	//edit as you see fit
@@ -1757,6 +1776,15 @@ goto :levelHeroesPressLevelUp
 		goto :closeMenu
 	endif
 	
+	getColor #color1 275 527
+	getColor #color2 275 519
+	//300 510
+	#time = #time + 210
+	if #color1 == #colorGray and #color2 == #colorGray
+		#loopDetectionCount = 0
+		goto :closeMenu
+	endif
+	
 	touchDown 1 280 510
 	sleep 20
 	touchMove 1 280 512
@@ -1784,15 +1812,6 @@ goto :levelHeroesPressLevelUp
 	touchUp 1
 	touchPress 1 280 750
 	#time = #time + 690
-	
-	getColor #color1 275 527
-	getColor #color2 275 519
-	//300 510
-	#time = #time + 210
-	if #color1 == #colorGray and #color2 == #colorGray
-		#loopDetectionCount = 0
-		goto :closeMenu
-	endif
 goto :levelHeroesPressLevelUp
 
 :levelHeroesPressLevelUp
