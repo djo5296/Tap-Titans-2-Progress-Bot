@@ -1,4 +1,4 @@
-// Dec 22, 2018
+// Dec 23, 2018
 // -  Tap Titans 2 AdvancedClickBot by Tune389 [ v1.3 dev 1]
 // edited by djo5296 '17-12-30
 // now fully handled by chrisreyn
@@ -803,7 +803,7 @@ goto :checkPrestigeB
 		touchDown 0 330 535
 		sleep #btnDelay
 		touchUp 0
-		sleep 17000
+		sleep 19000
 		goto :afterPrestige
 	else
 		touchPress 470 450
@@ -1378,7 +1378,7 @@ goto :closeMenu
 		#time = #time + 2120
 	endif
 	
-	if #minutes < 2
+	if #minutes < 1
 		goto :closeMenu
 	endif
 goto :levelHeroes2	
@@ -1400,6 +1400,7 @@ goto :levelHeroes2
 	
 	getColor #color 330 480
 	if #color != 5000276
+		sleep 500
 		goto :levelHeroes2
 	endif
 	
